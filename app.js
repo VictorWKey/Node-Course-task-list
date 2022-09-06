@@ -1,19 +1,37 @@
 import colors from 'colors';
 
-import { inquirerMenu, pause } from  "./helpers/inquirer.js";
+import { inquirerMenu, pause, readInput } from  "./helpers/inquirer.js";
+import {Task} from './models/task.js';
+import { Tasks } from './models/tasks.js';
 // const { showMenu, pause } = require("./helpers/messages");
 
 console.clear();
 
 const main = async()=>{
     let opt = ``;
+
+    const tasks = new Tasks();
+
+
+
     do{
         opt = await inquirerMenu();
-        console.log({opt});
+
+        switch(opt){
+            case `1`:
+                const desc = await readInput(`Description: `); 
+                tasks.createTask(desc);
+            break;
+            case `2`:
+                console.log(tasks._listed);
+            break;
+        }
+
         await pause();
 
     } while(opt !== `0`)
 }
 
 main();
+
 

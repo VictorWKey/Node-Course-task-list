@@ -67,6 +67,23 @@ const pause = () =>{
     return inquirer.prompt(inputQuestions); //Si usaramos la funcion async, el return no siempre funciona como un resolve(), es raro esto, si quieres ignora este comentario
 };
 
+const readInput = async message => {
+    const question = {
+        type: `input`,
+        name: `desc`,
+        message,
+        validate(value){
+            if(value.length === 0){
+                return `Por favor ingrese un valor`;
+            }
+            return true;
+        }
+    }
+
+    const {desc} = await inquirer.prompt(question);
+    return desc;
+
+};
 
 
-export {inquirerMenu, pause};
+export {inquirerMenu, pause, readInput};
