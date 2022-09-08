@@ -1,6 +1,7 @@
 import colors from 'colors';
 
 import { inquirerMenu, pause, readInput } from  "./helpers/inquirer.js";
+import { readDB, saveDB } from './helpers/manageDB.js';
 import {Task} from './models/task.js';
 import { Tasks } from './models/tasks.js';
 // const { showMenu, pause } = require("./helpers/messages");
@@ -12,7 +13,13 @@ const main = async()=>{
 
     const tasks = new Tasks();
 
+    const tasksDB = readDB();
 
+    if(tasksDB){
+
+    }
+
+    await pause();
 
     do{
         opt = await inquirerMenu();
@@ -23,9 +30,11 @@ const main = async()=>{
                 tasks.createTask(desc);
             break;
             case `2`:
-                console.log(tasks._listed);
+                console.log(tasks.arrayList);
             break;
         }
+
+        // saveDB(tasks.arrayList);
 
         await pause();
 

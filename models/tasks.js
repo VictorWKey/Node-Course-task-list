@@ -5,6 +5,17 @@ class Tasks {
         this._listed = {};
     }
 
+    get arrayList(){
+        const list = [];
+        Object.keys(this._listed).forEach(key => {
+            const task = this._listed[key];
+            list.push(task);
+        });
+
+        return list;
+    }
+
+
     createTask(desc = ``){
         const task = new Task(desc);
 
