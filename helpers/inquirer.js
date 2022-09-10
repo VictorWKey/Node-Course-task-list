@@ -85,5 +85,69 @@ const readInput = async message => {
 
 };
 
+const deleteMenu = async (tasks = []) => {
+    const choices = tasks.map((task, i) => {
+        return {
+            value: task.id,
+            name: `${(i + 1 + `.`).toString().green} ${task.desc}`
+        }
+    });
 
-export {inquirerMenu, pause, readInput};
+    choices.unshift({
+        value: `0`,
+        name: `${`0.`.green} Cancel`
+    });
+
+    const questions = [
+        {
+            type: `list`,
+            name: `id`,
+            message: `What file do you want to delete?`,
+            choices
+        }
+    ];
+
+    const {id} = await inquirer.prompt(questions);
+
+    return id;
+};
+
+const confirmAction = async (message) =>{
+    const question = [
+        {
+            type: `confirm`,
+            name: `ok`,
+            message
+        }
+    ];
+
+    const {ok} = await inquirer.prompt(question);
+
+    return ok;
+};
+
+const completeMenu = async (tasks = []) => {
+    const choices = tasks.map((task, i) => {
+        return {
+            value: task.id,
+            name: `${(i + 1 + `.`).toString().green} ${task.desc}`, 
+            checked: (task.completedOn) ? true : false
+        }
+    });
+
+    const questions = [
+        {
+            type: `checkbox`,
+            name: `ids`,
+            message: `Selections`,
+            choices
+        }
+    ];
+
+    const {ids} = await inquirer.prompt(questions); //Como en este caso es de tipo checkbox, el resultado va a ser un array con los "value" de las "choices" que esten marcadas, osea las que tengan un "checked": true
+
+    return ids;
+};
+
+export {inquirerMenu, pause, readInput, deleteMenu, confirmAction, completeMenu};
+
